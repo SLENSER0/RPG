@@ -8,7 +8,7 @@ public class ActionScheduler : MonoBehaviour
 {
     private IAction _currentAction;
     
-    // Start is called before the first frame update
+
     public void StartAction(IAction action)
     {
         if (_currentAction == action) return;
@@ -18,6 +18,10 @@ public class ActionScheduler : MonoBehaviour
 
         }
         _currentAction = action;
+    }
 
+    public void CancelCurrentAction()
+    {
+        StartAction(null);
     }
 }

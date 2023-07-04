@@ -1,4 +1,5 @@
 using RPG.Core;
+using RPG.LevelStats;
 using RPG.Movement;
 using UnityEngine;
 
@@ -9,12 +10,14 @@ namespace RPG.Combat
         [SerializeField] private float weaponRange = 2f;
         [SerializeField] float timeBetweenAttacks = 1f;
         [SerializeField] private float weaponDamage = 5f;
+        [SerializeField] private Projectile projectile;
+        [SerializeField] private Transform pointForSpawnProjectile;
         
-        private Health _target;
-        private float timeSinceLastAttack = 0;
+        private Stats _target;
+        private float _timeSinceLastAttack = Mathf.Infinity;
         private void Update()
         {
-            timeSinceLastAttack += Time.deltaTime;  
+            _timeSinceLastAttack += Time.deltaTime;  
             
             if (_target == null ) return;
             if (_target.IsDead()) return;
@@ -24,6 +27,7 @@ namespace RPG.Combat
             }
             else
             {
+                
                 GetComponent<Mover>().Cancel();
                 AttackBehaviour();
             }
@@ -32,11 +36,11 @@ namespace RPG.Combat
         private void AttackBehaviour()
         {
             transform.LookAt(_target.transform);
-            if (timeSinceLastAttack > timeBetweenAttacks)
+            if (_timeSinceLastAttack > timeBetweenAttacks)
             {
                 TriggerAttack();
-                timeSinceLastAttack = 0;
-                Hit();
+                _timeSinceLastAttack = 0;
+
 
             }
             
@@ -48,30 +52,45 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("attack");
         }
 
-        // Animation Event
-        public void Hit()
+        
+        // Animation event
+        private void Hit()
         {
             if (_target == null) return;
-            _target.TakeDamage(weaponDamage); 
-        }  
+            if (projectile == null)
+            {
+                _target.TakeDamage(weaponDamage);
+            }
+            else
+            {
+                LaunchProjectile();
+            }
+        }
 
         private bool GetIsInRange()
         {
             return Vector3.Distance(transform.position, _target.transform.position) < weaponRange;
         }
 
-        public bool CanAttack(CombatTarget combatTarget)
+        private void LaunchProjectile()
+        {
+            Projectile projectileInstance = Instantiate(projectile, pointForSpawnProjectile.position, pointForSpawnProjectile.rotation);
+            projectileInstance.SetTarget(_target, weaponDamage);
+        }
+
+        public bool CanAttack(GameObject combatTarget)
         {
             if (combatTarget == null) return false;
-            Health targetToTest = combatTarget.GetComponent<Health>();
+            if (combatTarget == gameObject) return false;
+            Stats targetToTest = combatTarget.GetComponent<Stats>();
             return targetToTest != null && !targetToTest.IsDead();
         }
 
 
-        public void Attack(CombatTarget combatTarget)
+        public void Attack(GameObject combatTarget)
         {
             GetComponent<ActionScheduler>().StartAction(this);
-            _target = combatTarget.GetComponent<Health>();
+            _target = combatTarget.GetComponent<Stats>();
         }
 
         public void Cancel()
@@ -85,6 +104,8 @@ namespace RPG.Combat
             GetComponent<Animator>().ResetTrigger("attack");
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
+
+
     }
 }
 
