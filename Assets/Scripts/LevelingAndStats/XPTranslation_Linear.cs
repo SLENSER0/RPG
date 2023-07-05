@@ -1,50 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-[CreateAssetMenu(menuName = "Stats/XP Linear", fileName = "XPTranslation_Linear")]
-public class XPTranslation_Linear : BaseXPTranslation
+
+namespace  RPG.LevelStats
 {
-    [SerializeField] int offset = 100;
-    [SerializeField] float slope = 50;
-    [SerializeField] int levelCap = 10;
+    [CreateAssetMenu(menuName = "Stats/XP Linear", fileName = "XPTranslation_Linear")]
+    public class XPTranslation_Linear : BaseXPTranslation
+    {
+        [SerializeField] private int offset = 100;
+        [SerializeField] private float slope = 50;
+        [SerializeField] private int levelCap = 10;
     
-    protected int XPForLevel(int level)
-    {
-        return Mathf.FloorToInt((Mathf.Min(levelCap, level) - 1) * slope + offset);
-    }
-    public override bool AddXP(int amount)
-    {
+        protected int XPForLevel(int level)
+        {
+            return Mathf.FloorToInt((Mathf.Min(levelCap, level) - 1) * slope + offset);
+        }
+        public override bool AddXP(int amount)
+        {
         
-        if (AtLevelCap)
-            return false;
+            if (AtLevelCap)
+                return false;
 
-        CurrentXP += amount;
+            CurrentXP += amount;
 
-        int newLevel = Mathf.Min(Mathf.FloorToInt((CurrentXP - offset) / slope) + 1, levelCap);
-        bool levelledUp = newLevel != CurrentLevel;
+            int newLevel = Mathf.Min(Mathf.FloorToInt((CurrentXP - offset) / slope) + 1, levelCap);
+            bool levelledUp = newLevel != CurrentLevel;
 
-        CurrentLevel = newLevel;
-        AtLevelCap = CurrentLevel == levelCap;
+            CurrentLevel = newLevel;
+            AtLevelCap = CurrentLevel == levelCap;
 
-        return levelledUp;
-    }
+            return levelledUp;
+        }
 
-    public override void SetLevel(int level)
-    {
-        CurrentXP = 0;
-        CurrentLevel = 1;
-        AtLevelCap = false;
+        public override void SetLevel(int level)
+        {
+            CurrentXP = 0;
+            CurrentLevel = 1;
+            AtLevelCap = false;
 
-        AddXP(XPForLevel(level));
-    }
+            AddXP(XPForLevel(level));
+        }
 
-    protected override int GetXPRequiredForNextLevel()
-    {
-        if (AtLevelCap)
-            return int.MaxValue;
+        protected override int GetXPRequiredForNextLevel()
+        {
+            if (AtLevelCap)
+                return int.MaxValue;
 
-        return XPForLevel(CurrentLevel + 1) - CurrentXP;
+            return XPForLevel(CurrentLevel + 1) - CurrentXP;
+        }
     }
 }
+

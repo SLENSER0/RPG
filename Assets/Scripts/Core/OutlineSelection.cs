@@ -1,31 +1,32 @@
 using UnityEngine;
 
-[RequireComponent(typeof(Outline))]
-public class OutlineSelection : MonoBehaviour
+namespace RPG.Core
 {
+	[RequireComponent(typeof(Outline))]
+	public class OutlineSelection : MonoBehaviour
+	{
+		private RaycastHit _lastHit;
+		void Update()
+		{
+			Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			RaycastHit hit;
+	    
+	    
+			if (Physics.Raycast(ray, out hit))
+			{
+				if (hit.collider.tag == "Enemy")
+				{
+					_lastHit = hit;
+					hit.collider.GetComponent<Outline>().OutlineColor = Color.red;
+					hit.collider.GetComponent<Outline>().enabled = true;
+				}
+				else
+				{
+					_lastHit.collider.GetComponent<Outline>().enabled = false;
+				}
 
-    Ray ray;
-    RaycastHit hit;
-	
-    void Update()
-    {
-	    Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-	    RaycastHit hit;
-
-	    if (Physics.Raycast(ray, out hit))
-	    {
-		    GameObject[] gameObjects = GameObject.FindGameObjectsWithTag("Enemy");
-		    foreach (GameObject obj in gameObjects)
-		    {
-			    obj.GetComponent<Outline>().enabled = false;
-			    hit.collider.GetComponent<Outline>().OutlineColor = Color.red;
-		    }
-
-		    if (hit.collider.CompareTag("Enemy"))
-		    {
-			    hit.collider.GetComponent<Outline>().OutlineColor = Color.red;
-			    hit.collider.GetComponent<Outline>().enabled = true;
-		    }
-	    }
-    }
+			}
+		}
+	}
 }
+

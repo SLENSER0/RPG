@@ -1,16 +1,12 @@
 using System;
-using Unity.Mathematics;
+using RPG.Core;
+using RPG.Combat;
 using UnityEngine;
-using UnityEngine.AI;
-using UnityEngine.Serialization;
-
 
 namespace RPG.LevelStats
 {
     public class Stats : MonoBehaviour
     {
-        [Range(1, 10)]
-        [SerializeField] private CharacterClass characterClass;
         [SerializeField] private int xpReward;
         
         [Header("Health & Mana")] 
@@ -34,6 +30,11 @@ namespace RPG.LevelStats
         [SerializeField] private int staminaToHealthConversion = 10;
         [SerializeField] private int strengthToDamageConversion = 2;
         [SerializeField] private int intelligenceToManaConversion = 10;
+
+
+        private float _baseHealth = 100;
+        private float _baseMana = 100;
+        private float _baseDamage = 5;
         
         private bool _isDead = false;
 
@@ -44,6 +45,14 @@ namespace RPG.LevelStats
             _player = GameObject.FindGameObjectWithTag("Player");
         }
 
+        private void Update()
+        {
+            if (!gameObject.CompareTag("Player")) return;
+            maxHealth = _baseHealth + stamina * staminaToHealthConversion;
+            maxMana = _baseMana + intelligence * intelligenceToManaConversion;
+            _player.GetComponent<Fighter>().SetWeaponDamage((int)_baseDamage+strength*strengthToDamageConversion);
+        }
+
         public bool IsDead()
         {
             return _isDead;
@@ -51,7 +60,6 @@ namespace RPG.LevelStats
 
         public void TakeDamage(float damage)
         {
-            damage += strength * strengthToDamageConversion;
             currentHealthPoints = Mathf.Max(currentHealthPoints - damage, 0);
             if (currentHealthPoints == 0) Die();
         }
@@ -66,9 +74,19 @@ namespace RPG.LevelStats
             return currentHealthPoints;
         }
 
+        public float GetMaxHealth()
+        {
+            return maxHealth;
+        }
+
         public float GetMana()
         {
             return currentManaPoints;
+        }
+        
+        public float GetMaxMana()
+        {
+            return maxMana;
         }
 
         private void Die()
@@ -82,26 +100,30 @@ namespace RPG.LevelStats
             
         }
 
-        public void OnUpdateLevel()
+        public void OnUpdateLevel(int previousLevel, int currentLevel)
         {
             statPoints += statsPerLevel;
+            print(previousLevel);
+            print(currentLevel);
         }
 
         public void IncreaseStat(ref int stat, int amount = 1)
         {
             stat += Math.Min(amount, statPoints);
             statPoints -= Math.Min(amount, statPoints);
+            
         }
 
         public void IncreaseStamina(int amount = 1)
         {
             IncreaseStat(ref stamina, amount);
+            
         }
 
         public void IncreaseStrength(int amount = 1)
         {
             IncreaseStat(ref strength, amount);
-        }
+        } 
 
         public void IncreaseIntelligence(int amount = 1)
         {

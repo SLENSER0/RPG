@@ -1012,7 +1012,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e74ffc340f3e44ba84e871e8c10882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 30
+  characterClass: 0
+  xpReward: 0
+  currentHealthPoints: 100
+  maxHealth: 100
+  currentManaPoints: 0
+  maxMana: 0
+  strength: 0
+  stamina: 0
+  intelligence: 0
+  statPoints: 0
+  statsPerLevel: 5
+  staminaToHealthConversion: 10
+  strengthToDamageConversion: 2
+  intelligenceToManaConversion: 10
 --- !u!114 &2288119754187753466
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1109,7 +1122,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421985810610817713}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60002db89c5cc774fa51f62e68e4aacd, type: 3}
   m_Name: 
@@ -1121,7 +1134,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2421985810610817713}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 

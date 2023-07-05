@@ -1,41 +1,51 @@
-using System;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class XPTracker : MonoBehaviour
+namespace  RPG.LevelStats
 {
-    [SerializeField] private BaseXPTranslation xpTranslationType;
+    public class XPTracker : MonoBehaviour
+    {
+        [SerializeField] private BaseXPTranslation xpTranslationType;
+        [SerializeField] UnityEvent<int, int> OnLevelChanged = new UnityEvent<int, int>();
     
-    private BaseXPTranslation _xpTranslation;
+        private BaseXPTranslation _xpTranslation;
 
 
-    private void Awake()
-    {
-        _xpTranslation = ScriptableObject.Instantiate(xpTranslationType);
-    }
+        private void Awake()
+        {
+            _xpTranslation = ScriptableObject.Instantiate(xpTranslationType);
+        }
 
-    // Update is called once per frame
-    public void AddXP(int amount)
-    {
-        _xpTranslation.AddXP(amount);
-        print(_xpTranslation.XPRequiredForNextLevel);
-        print(_xpTranslation.CurrentXP);
-        print(_xpTranslation.CurrentLevel);
+        // Update is called once per frame
+        public void AddXP(int amount)
+        {
+            int previousLevel = _xpTranslation.CurrentLevel;
+            if (_xpTranslation.AddXP(amount))
+            {
+                OnLevelChanged.Invoke(previousLevel,_xpTranslation.CurrentLevel);
+            }
 
-    }
+        }
 
-    public void SetLevel(int level)
-    {
-        _xpTranslation.SetLevel(level);
-    }
+        public void SetLevel(int level)
+        {
+            _xpTranslation.SetLevel(level);
+        }
 
-    private void Start()
-    {
-        
-    }
+        public int GetLevel()
+        {
+            return _xpTranslation.CurrentLevel;
+        }
+        public int GetCurrentXP()
+        {
+            return _xpTranslation.CurrentXP;
+        }
+        public int GetXPRequiredForNextLevel()
+        {
+            return _xpTranslation.XPRequiredForNextLevel;
+        }
 
-    private void Update()
-    {
-        
     }
 }
+
     

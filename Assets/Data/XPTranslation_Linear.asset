@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: XPTranslation_Linear
   m_EditorClassIdentifier: 
   offset: 100
-  slope: 50
+  slope: 500
   levelCap: 10

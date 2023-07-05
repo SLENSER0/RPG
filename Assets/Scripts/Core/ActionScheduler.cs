@@ -1,27 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using RPG.Core;
-using RPG.Movement;
 using UnityEngine;
 
-public class ActionScheduler : MonoBehaviour
+namespace RPG.Core
 {
-    private IAction _currentAction;
+    public class ActionScheduler : MonoBehaviour
+    {
+        private IAction _currentAction;
     
 
-    public void StartAction(IAction action)
-    {
-        if (_currentAction == action) return;
-        if (_currentAction != null)
+        public void StartAction(IAction action)
         {
-            _currentAction.Cancel();
+            if (_currentAction == action) return;
+            if (_currentAction != null)
+            {
+                _currentAction.Cancel();
 
+            }
+            _currentAction = action;
         }
-        _currentAction = action;
-    }
 
-    public void CancelCurrentAction()
-    {
-        StartAction(null);
+        public void CancelCurrentAction()
+        {
+            StartAction(null);
+        }
     }
 }

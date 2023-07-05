@@ -1125,7 +1125,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e74ffc340f3e44ba84e871e8c10882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 10
+  characterClass: 0
+  xpReward: 100
+  currentHealthPoints: 10
+  maxHealth: 100
+  currentManaPoints: 0
+  maxMana: 0
+  strength: 0
+  stamina: 0
+  intelligence: 0
+  statPoints: 0
+  statsPerLevel: 5
+  staminaToHealthConversion: 10
+  strengthToDamageConversion: 2
+  intelligenceToManaConversion: 10
 --- !u!114 &5019848729485527306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1149,9 +1162,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 1000
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 5000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -1172,7 +1185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0645e62939591c94da63d451759f9c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chaseDistance: 13
+  chaseDistance: 12
 --- !u!114 &147724589819353492
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,7 +1235,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3086922019058585223}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 60002db89c5cc774fa51f62e68e4aacd, type: 3}
   m_Name: 
@@ -1234,7 +1247,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3086922019058585223}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 

@@ -105,6 +105,11 @@ namespace RPG.Combat
             GetComponent<Animator>().SetTrigger("stopAttack");
         }
 
+        public void SetWeaponDamage(int newDamage)
+        {
+            weaponDamage = newDamage;
+        }
+
 
     }
 }

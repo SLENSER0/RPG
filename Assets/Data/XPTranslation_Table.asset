@@ -12,3 +12,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a2a1de8f77b0c014d87e0b50ad5ce320, type: 3}
   m_Name: XPTranslation_Table
   m_EditorClassIdentifier: 
+  table:
+  - Level: 0
+    XPRequired: 0
+  - Level: 2
+    XPRequired: 20
+  - Level: 3
+    XPRequired: 30
+  - Level: 4
+    XPRequired: 40
+  - Level: 5
+    XPRequired: 0
+  - Level: 6
+    XPRequired: 0
+  - Level: 7
+    XPRequired: 0
+  - Level: 8
+    XPRequired: 0
+  - Level: 9
+    XPRequired: 0
+  - Level: 10
+    XPRequired: 0

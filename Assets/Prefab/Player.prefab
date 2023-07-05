@@ -12508,6 +12508,8 @@ GameObject:
   - component: {fileID: 862491195}
   - component: {fileID: 862491196}
   - component: {fileID: 1036749948}
+  - component: {fileID: 1036749949}
+  - component: {fileID: 1036749950}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -12655,7 +12657,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55e74ffc340f3e44ba84e871e8c10882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPoints: 50
+  xpReward: 0
+  currentHealthPoints: 1000
+  maxHealth: 1000
+  currentManaPoints: 0
+  maxMana: 0
+  strength: 0
+  stamina: 0
+  intelligence: 0
+  statPoints: 0
+  statsPerLevel: 5
+  staminaToHealthConversion: 10
+  strengthToDamageConversion: 2
+  intelligenceToManaConversion: 10
 --- !u!136 &1036749948
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -12670,3 +12684,47 @@ CapsuleCollider:
   m_Height: 2.6045566
   m_Direction: 1
   m_Center: {x: 0, y: 0.8022783, z: 0}
+--- !u!54 &1036749949
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510523813889079999}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
+--- !u!114 &1036749950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2510523813889079999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae021f5eefc0fd04093c8ee5f1d9496a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  xpTranslationType: {fileID: 11400000, guid: d138e428b2f7b3c4586646154ededed8, type: 2}
+  OnLevelChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 862491196}
+        m_TargetAssemblyTypeName: RPG.LevelStats.Stats, Assembly-CSharp
+        m_MethodName: OnUpdateLevel
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
